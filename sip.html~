@@ -1,0 +1,134 @@
+
+
+<script>
+var linh_ws;
+var linh_init = function(){
+
+	var _global = (function() { return this; })();
+var nativeWebSocket = _global.WebSocket || _global.MozWebSocket;
+	  try {
+      //linh_ws = new nativeWebSocket("ws://127.0.0.1:8080", 'sip');
+	linh_ws = new WebSocket("ws://118.69.135.152:7080",'sip');
+    } catch(e) {
+      	console.log('error connecting to WebSocket ');
+	console.log(e);
+    }
+
+    linh_ws.binaryType = 'arraybuffer';
+
+    linh_ws.onopen = function() {
+      console.log('linh onopen');
+
+      
+
+
+var ms2 = "REGISTER sip:118.69.135.152 SIP/2.0\r\nVia: SIP/2.0/WS 192.0.2.172;branch=z9hG4bK7483045\r\nMax-Forwards: 69\r\nTo: <sip:8668@118.69.135.152>\r\nFrom: <sip:8668@118.69.135.152>;tag=lra568ui9l\r\nCall-ID: qeus547gffbdbmkfemhpkm\r\nCSeq: 3 REGISTER\r\nAuthorization: Digest algorithm=MD5, username=\"8668\", realm=\"118.69.135.152\", nonce=\"57039788000049a079b965cf9cf40552b10d6881887f12ea\", uri=\"sip:118.69.135.152\", response=\"330a4eff7e9309dba61260569cb6ec3e\"\r\nContact: <sip:7kof7ob4@192.0.2.172;transport=ws>;+sip.ice;reg-id=1;+sip.instance=\"<urn:uuid:6838679e-b612-4449-a220-6d56acf9e60b>\";expires=3600\r\nExpires: 3600\r\nAllow: INVITE,ACK,CANCEL,BYE,UPDATE,MESSAGE,OPTIONS,REFER\r\nSupported: path,gruu,outbound\r\nUser-Agent: JsSIP 0.7.11\r\nContent-Length: 0\r\n\r\n";
+
+
+
+var ms3 = "REGISTER sip:127.0.0.1 SIP/2.0\nVia: SIP/2.0/WS 192.0.2.236;branch=z9hG4bK7997476\nMax-Forwards: 69\nTo: <sip:linh@127.0.0.1>\nFrom: <sip:linh@127.0.0.1>;tag=kjf24s0nil\r\nCall-ID: 98fct2nkb37uu2nb2vt143\nCSeq: 2 REGISTER\nContact: <sip:t85nd3rv@192.0.2.236;transport=ws>;+sip.ice;reg-id=1;+sip.instance=\"<urn:uuid:c76d72a7-56bf-450b-8b39-d53805c9d32f>\";expires=3600\nExpires: 3600\nAllow: INVITE,ACK,CANCEL,BYE,UPDATE,MESSAGE,OPTIONS,REFER\nSupported: path,gruu,outbound\nUser-Agent: JsSIP 0.7.11\nContent-Length: 0\r\n\r\n";
+
+
+
+	//linh_ws.send(getMsg());
+	linh_ws.send(ms2);
+    };
+
+    linh_ws.onclose = function(e) {
+      console.log('linh onclose');
+    };
+
+    linh_ws.onmessage = function(e) {
+       console.log('linh onmessage');
+	console.log(e);
+    };
+
+    linh_ws.onerror = function(e) {
+      console.log('linh onerror');
+	console.log(e);
+    };
+
+
+
+}
+
+
+
+
+
+
+var configuration = {
+	 	'ws_servers':         'ws://127.0.0.1:8080',
+       // 'ws_servers':         'ws://118.69.135.152:5066',
+         //'ws_servers':         'wss://118.69.135.152:7443',
+        'uri':                '',
+        'password':           '',
+        'server':             '127.0.0.1',
+
+        'log': { 'level': 'debug' },
+       
+        'display_name': '',
+        'authorization_user': '',
+        'register': true,
+        'register_expires': 3600,
+        'registrar_server': '',
+        'no_answer_timeout': 60,
+        'session_timers': false,
+        'use_preloaded_route': false,
+        'connection_recovery_min_interval': 2,
+        'connection_recovery_max_interval': 30,
+        'hack_via_tcp': false,
+        'hack_via_ws': false,
+        'hack_ip_in_contact': true
+};
+
+		configuration.uri = "sip:" + "linh" + "@" + configuration.server;
+		configuration.password = '45464';
+		//ua = new JsSIP.UA(configuration);
+		//addEventUA(ua);
+		//ua.start();
+
+function  getMsg(){
+	 var msg = '', header, length, idx, 
+      supported = [];
+
+    msg += 'REGISTER' + ' ' + 'sip:127.0.0.1' + ' SIP/2.0\r\n';
+
+
+	
+	headers = [];
+
+	headers['Via'] = ["SIP/2.0/WS 192.0.2.122;branch=6546456z9hG4bK4715447"];
+	headers['To'] = ["<sip:linh@2>"];
+	headers['Max-Forwards'] =0;
+	headers['Call-ID'] = ["423434rr39bvp464636htfr5453534563454623p957ckl"];
+	headers['CSeq'] = ["1 REGISTER"];
+
+
+    for (header in this.headers) {
+      length = this.headers[header].length;
+      for (idx = 0; idx < length; idx++) {
+        msg += header + ': ' + this.headers[header][idx] + '\r\n';
+      }
+    }
+
+    supported.push('path', 'gruu');
+    supported.push('outbound');
+
+    // Allow
+   // msg += 'Allow: '+ "INVITE,ACK,CANCEL,BYE,UPDATE,MESSAGE,OPTIONS,REFER" +'\r\n';
+   // msg += 'Supported: ' +  supported +'\r\n';
+   // msg += 'User-Agent: ' + "JsSIP 0.7.11 linh" +'\r\n';
+
+   // msg += 'Content-Length: 0\r\n\r\n';
+
+    return msg;
+
+}
+
+linh_init();
+
+</script>
+
+<body>
+</body>
